@@ -403,6 +403,7 @@ test-results*
 .test
 .test/*
 
+types*
 !src/types*
 !src/**/types*
 !docs/types*
@@ -410,7 +411,6 @@ test-results*
 
 .env.*
 !.env.example
-types*
 
 docs/.vitepress/dist
 docs/.vitepress/cache
