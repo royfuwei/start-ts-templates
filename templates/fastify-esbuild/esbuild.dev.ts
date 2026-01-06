@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import { esbuildDevNodemonPlugin } from './scripts/devNodemonPlugin';
 import esbuildPluginTsc from 'esbuild-plugin-tsc';
+import { copyFilesEsbuildPlugin } from './scripts/copyFilesPlugin';
 
 const distDir = 'dist';
 const inputFile = 'src/main.ts';
@@ -34,7 +35,13 @@ async function buildApp() {
     outfile: path.join(distDir, 'main.js'),
     format: 'cjs',
     target: ['es2023'],
-    plugins: [esbuildDevNodemonPlugin(), esbuildPluginTsc()],
+    plugins: [
+      esbuildDevNodemonPlugin(),
+      esbuildPluginTsc(),
+      copyFilesEsbuildPlugin({
+        files: ['README.md'],
+      }),
+    ],
   });
   (await buildContext).watch();
 }
