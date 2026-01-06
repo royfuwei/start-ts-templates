@@ -27,8 +27,9 @@ export default defineConfig({
 
   treeshake: true,
 
-  // 對應原本 platform: 'neutral'
-  platform: 'neutral',
+  platform: 'node',
+
+  fixedExtension: false,
 
   // 你原本沒設 target，就給個合理的預設
   target: 'es2023',

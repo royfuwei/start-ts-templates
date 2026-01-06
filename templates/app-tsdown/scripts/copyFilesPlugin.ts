@@ -1,24 +1,33 @@
 /* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 // copyFilesPlugin.js
 import fs from 'fs';
 import path from 'path';
 
-const copyFilesFn = async (distDir: string, files: string[]) => {
-  files = files || [];
-  console.log(`\nCopying ${files.join(', ')} files to: ${distDir}`);
-  for (const file of files) {
+const copyFilesFn = async (distDir: string, paths: string[]) => {
+  paths = paths || [];
+  console.log(`\nCopying ${paths.join(', ')} to: ${distDir}`);
+
+  for (const p of paths) {
+    const srcPath = path.resolve(p);
+    const destPath = path.join(distDir, p);
+
     try {
-      fs.accessSync(file, fs.constants.R_OK);
-    } catch (err: unknown) {
-      console.error(`\nFile not found: ${file}`);
+      fs.accessSync(srcPath, fs.constants.R_OK);
+    } catch {
+      console.error(`\nPath not found: ${srcPath}`);
       continue;
     }
-    const srcPath = path.join(file);
-    const destPath = path.join(distDir, file);
+
     fs.mkdirSync(path.dirname(destPath), { recursive: true });
-    fs.copyFileSync(srcPath, destPath);
-    console.log(`\nFile copied to: ${destPath}`);
+
+    fs.cpSync(srcPath, destPath, {
+      recursive: true, // ⭐ 關鍵
+      force: true, // 覆蓋
+      preserveTimestamps: true,
+    });
+
+    console.log(`\nCopied: ${srcPath} → ${destPath}`);
   }
 };
 
