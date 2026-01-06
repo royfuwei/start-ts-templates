@@ -6,6 +6,7 @@ import { dtsBundlePlugin } from './scripts/dtsBundlePlugin';
 import path from 'path';
 import fs from 'fs';
 import esbuildPluginTsc from 'esbuild-plugin-tsc';
+import { copyFilesEsbuildPlugin } from './scripts/copyFilesPlugin';
 
 const distDir = 'dist';
 const inputFile = 'src/index.ts';
@@ -39,6 +40,9 @@ async function buildLib() {
     plugins: sharedConfig.plugins?.concat([
       copyPackageJsonPlugin({ distDir }),
       dtsBundlePlugin(),
+      copyFilesEsbuildPlugin({
+        files: ['README.md'],
+      }),
     ]),
   });
   (await esmContext).watch();
