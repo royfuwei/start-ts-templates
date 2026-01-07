@@ -2,6 +2,7 @@
   "name": "app-esbuild",
   "version": "0.0.0",
   "description": "A project created by starter-ts-app",
+  "private": "true",
   "scripts": {
     "clean": "npx rimraf ./dist",
     "dev": "npx cross-env NODE_OPTIONS=--enable-source-maps npm run dev:esbuild",

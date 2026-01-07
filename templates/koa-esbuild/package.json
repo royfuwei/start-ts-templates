@@ -2,6 +2,7 @@
   "name": "koa-esbuild",
   "version": "0.0.0",
   "description": "A project created by starter-ts-koa",
+  "private": true,
   "scripts": {
     "clean": "npx rimraf ./dist",
     "build": "npm run build:esbuild",
